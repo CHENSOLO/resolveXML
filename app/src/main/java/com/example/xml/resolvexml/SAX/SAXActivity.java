@@ -10,13 +10,9 @@ import android.widget.ListView;
 
 import com.example.xml.resolvexml.R;
 
-import org.xml.sax.SAXException;
-
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
-import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
@@ -34,7 +30,8 @@ public class SAXActivity extends AppCompatActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
        setContentView(R.layout.activity_sax);
 
-      setViews();}
+      setViews();
+    }
 
     private void setViews() {
         list = findViewById(R.id.list);
@@ -44,43 +41,51 @@ public class SAXActivity extends AppCompatActivity implements View.OnClickListen
     }
 
 
-    private ArrayList<Person> readxmlForSAX() throws IOException, SAXException {
+    private ArrayList<Person> readxmlForSAX() throws Exception {
         //获取文件资源建立输入流对象
-        InputStream inputStream = getAssets().open("person.xml");
-        //创建XML解析处理器
-        SaxHelper saxHelper = new SaxHelper();
-        //得到SAX解析工厂
+        InputStream is = getAssets().open("person.xml");
+        //①创建XML解析处理器
+        SaxHelper ss = new SaxHelper();
+        //②得到SAX解析工厂
         SAXParserFactory factory = SAXParserFactory.newInstance();
-        //创建SAX解析器
-        SAXParser parser = null;
-        try {
-            parser = factory.newSAXParser();
-        } catch (ParserConfigurationException e) {
-            e.printStackTrace();
-        }
-        //将XML解析处理器分配给解析器，对文档进行解析，将事件发送给处理器
-        parser.parse(inputStream,saxHelper);
-        inputStream.close();
-        return saxHelper.getPersons();
-
+        //③创建SAX解析器
+        SAXParser parser = factory.newSAXParser();
+        //④将xml解析处理器分配给解析器,对文档进行解析,将事件发送给处理器
+        parser.parse(is, ss);
+        is.close();
+        return ss.getPersons();
     }
-
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.btnsax:
-                try {
-                    persons = readxmlForSAX();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (SAXException e) {
-                    e.printStackTrace();
-                }
-                mAdapter = new ArrayAdapter<Person>(SAXActivity.this,
-                        android.R.layout.simple_expandable_list_item_1, persons);
-                list.setAdapter(mAdapter);
-                break;
-        }
+              switch (v.getId()){
+                  case R.id.btnsax:
+                      try {
+                          persons = readxmlForSAX();
+                      } catch (Exception e) {
+                          e.printStackTrace();
+                      }
+                      mAdapter =new ArrayAdapter<Person>(SAXActivity.this,
+                              android.R.layout.simple_expandable_list_item_1,persons);
+                      list.setAdapter(mAdapter);
+                      break;
+              }
     }
+
+//    @Override
+//    public void onClick(View v) {
+//        switch (v.getId()){
+//            case R.id.btnsax:
+//                try {
+//                    persons = readxmlForSAX();
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//
+//                mAdapter = new ArrayAdapter<Person>(SAXActivity.this,
+//                        android.R.layout.simple_expandable_list_item_1, persons);
+//                list.setAdapter(mAdapter);
+//                break;
+//        }
+//    }
 }
 

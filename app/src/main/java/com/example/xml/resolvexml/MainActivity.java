@@ -6,9 +6,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.xml.resolvexml.DOM.DOMActivity;
 import com.example.xml.resolvexml.PULL.PULLActivity;
 import com.example.xml.resolvexml.SAX.SAXActivity;
+
+import com.example.xml.resolvexml.DOM.DOMActivity;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 private Button open_SAX,open_DOM,open_PULL;

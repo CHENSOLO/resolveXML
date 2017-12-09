@@ -17,9 +17,9 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".DOM.DOMActivity"></activity>
         <activity android:name=".PULL.PULLActivity"></activity>
         <activity android:name=".SAX.SAXActivity"></activity>
+        <activity android:name=".DOM.DOMActivity"></activity>
     </application>
 
 </manifest>
